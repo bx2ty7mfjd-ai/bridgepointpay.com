@@ -21,13 +21,13 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 .nav-r{display:flex;align-items:center;gap:28px;}
 .nav-r a{font-size:13px;color:#888;font-weight:500;transition:color 0.15s;}
 .nav-r a:hover{color:#0a0a0a;}
-.nav-btn{background:#0a0a0a;color:#fff;padding:8px 18px;border-radius:5px;font-size:13px;font-weight:600;transition:opacity 0.15s;}
+.nav-btn{background:#0a0a0a;color:#fff;padding:8px 18px;border-radius:5px;font-size:13px;font-weight:600;transition:opacity 0.15s;cursor:pointer;border:none;}
 .nav-btn:hover{opacity:0.75;}
 
 .hero{max-width:1100px;margin:0 auto;padding:96px 64px 80px;}
 .hero h1{font-size:52px;font-weight:700;line-height:1.06;letter-spacing:-2px;color:#0a0a0a;max-width:560px;margin-bottom:20px;}
 .hero p{font-size:17px;color:#888;line-height:1.7;max-width:420px;margin-bottom:36px;font-weight:400;}
-.hero-btn{display:inline-block;background:#0a0a0a;color:#fff;padding:13px 26px;border-radius:5px;font-size:14px;font-weight:600;transition:opacity 0.15s;}
+.hero-btn{display:inline-block;background:#0a0a0a;color:#fff;padding:13px 26px;border-radius:5px;font-size:14px;font-weight:600;transition:opacity 0.15s;cursor:pointer;border:none;}
 .hero-btn:hover{opacity:0.75;}
 
 .divider{height:1px;background:#e8e8e4;margin:0 64px;}
@@ -54,13 +54,35 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 .cta-sec{text-align:center;padding:96px 64px;border-top:1px solid #e8e8e4;}
 .cta-sec h2{font-size:38px;font-weight:700;letter-spacing:-1.2px;margin-bottom:14px;}
 .cta-sec p{font-size:15px;color:#888;margin-bottom:32px;}
-.cta-btn{display:inline-block;background:#0a0a0a;color:#fff;padding:13px 26px;border-radius:5px;font-size:14px;font-weight:600;transition:opacity 0.15s;}
+.cta-btn{display:inline-block;background:#0a0a0a;color:#fff;padding:13px 26px;border-radius:5px;font-size:14px;font-weight:600;transition:opacity 0.15s;cursor:pointer;border:none;}
 .cta-btn:hover{opacity:0.75;}
 
 footer{border-top:1px solid #e8e8e4;padding:26px 64px;display:flex;align-items:center;justify-content:space-between;}
 .ft-logo{font-size:14px;font-weight:700;color:#0a0a0a;}
 .ft-logo span{color:#2346f5;}
 .ft-copy{font-size:12px;color:#ccc;}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.modal-overlay.active{display:flex;}
+.modal{background:#fff;border-radius:12px;padding:40px;width:100%;max-width:460px;position:relative;}
+.modal h2{font-size:22px;font-weight:700;letter-spacing:-0.5px;margin-bottom:8px;}
+.modal p{font-size:13px;color:#888;margin-bottom:28px;}
+.modal-close{position:absolute;top:16px;right:20px;background:none;border:none;font-size:20px;color:#aaa;cursor:pointer;line-height:1;}
+.modal-close:hover{color:#0a0a0a;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:12px;font-weight:600;color:#555;margin-bottom:6px;letter-spacing:0.3px;}
+.field input,.field select{width:100%;padding:10px 12px;border:1px solid #e8e8e4;border-radius:6px;font-size:14px;font-family:'Inter',sans-serif;color:#0a0a0a;outline:none;transition:border-color 0.15s;}
+.field input:focus,.field select:focus{border-color:#2346f5;}
+.field select option:first-child{color:#aaa;}
+.modal-submit{width:100%;background:#0a0a0a;color:#fff;padding:12px;border-radius:6px;font-size:14px;font-weight:600;border:none;cursor:pointer;margin-top:8px;transition:opacity 0.15s;}
+.modal-submit:hover{opacity:0.75;}
+.modal-submit:disabled{opacity:0.4;cursor:not-allowed;}
+.modal-success{display:none;text-align:center;padding:20px 0;}
+.modal-success .check{font-size:40px;margin-bottom:16px;}
+.modal-success h3{font-size:18px;font-weight:700;margin-bottom:8px;}
+.modal-success p{font-size:14px;color:#888;}
+.modal-error{display:none;font-size:13px;color:#dc2626;margin-top:10px;text-align:center;}
 
 @media(max-width:768px){
   nav{padding:0 20px;height:60px;}
@@ -76,6 +98,7 @@ footer{border-top:1px solid #e8e8e4;padding:26px 64px;display:flex;align-items:c
   .cta-sec{padding:64px 20px;}
   .cta-sec h2{font-size:28px;}
   footer{padding:20px;flex-direction:column;gap:8px;text-align:center;}
+  .modal{margin:20px;padding:28px;}
 }
 </style>
 </head>
@@ -98,14 +121,14 @@ footer{border-top:1px solid #e8e8e4;padding:26px 64px;display:flex;align-items:c
     <a href="#how">How it works</a>
     <a href="#rails">Rails</a>
     <a href="#serve">Who we serve</a>
-    <a href="mailto:hello@bridgepointpay.com" class="nav-btn">Request access</a>
+    <button class="nav-btn" onclick="openModal()">Request access</button>
   </div>
 </nav>
 
 <div class="hero">
   <h1>Modern payment infrastructure for banks.</h1>
   <p>One API connects your institution to FedNow and RTP. Transactions settle in seconds. No core replacement required.</p>
-  <a href="mailto:hello@bridgepointpay.com" class="hero-btn">Request access</a>
+  <button class="hero-btn" onclick="openModal()">Request access</button>
 </div>
 
 <div class="divider"></div>
@@ -174,13 +197,111 @@ footer{border-top:1px solid #e8e8e4;padding:26px 64px;display:flex;align-items:c
 <div class="cta-sec">
   <h2>Ready to move money faster?</h2>
   <p>We're working with a select group of institutions. Reach out to start the conversation.</p>
-  <a href="mailto:hello@bridgepointpay.com" class="cta-btn">Request access →</a>
+  <button class="cta-btn" onclick="openModal()">Request access →</button>
 </div>
 
 <footer>
   <div class="ft-logo">Bridge<span>Point</span> Pay</div>
   <div class="ft-copy">© 2026 BridgePoint Pay. All rights reserved.</div>
 </footer>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="modalForm">
+      <h2>Request access</h2>
+      <p>We're onboarding a select group of community banks. Tell us about your institution.</p>
+      <div class="field">
+        <label>YOUR NAME</label>
+        <input type="text" id="f-name" placeholder="Jane Smith" />
+      </div>
+      <div class="field">
+        <label>INSTITUTION NAME</label>
+        <input type="text" id="f-institution" placeholder="First Community Bank" />
+      </div>
+      <div class="field">
+        <label>WORK EMAIL</label>
+        <input type="email" id="f-email" placeholder="jane@firstcommunitybank.com" />
+      </div>
+      <div class="field">
+        <label>TOTAL ASSETS</label>
+        <select id="f-assets">
+          <option value="" disabled selected>Select range</option>
+          <option>Under $100M</option>
+          <option>$100M – $250M</option>
+          <option>$250M – $500M</option>
+          <option>$500M – $1B</option>
+          <option>Over $1B</option>
+        </select>
+      </div>
+      <button class="modal-submit" id="submitBtn" onclick="submitForm()">Submit request</button>
+      <div class="modal-error" id="modalError"></div>
+    </div>
+    <div class="modal-success" id="modalSuccess">
+      <div class="check">✓</div>
+      <h3>Request received</h3>
+      <p>We'll be in touch within 1–2 business days.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'https://devoted-miracle-production.up.railway.app';
+
+function openModal() {
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('f-name').focus(), 100);
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+async function submitForm() {
+  const name = document.getElementById('f-name').value.trim();
+  const institution = document.getElementById('f-institution').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const assets = document.getElementById('f-assets').value;
+  const errEl = document.getElementById('modalError');
+  const btn = document.getElementById('submitBtn');
+
+  errEl.style.display = 'none';
+
+  if (!name || !institution || !email) {
+    errEl.textContent = 'Please fill in all required fields.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  try {
+    const res = await fetch(`${API}/contact`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, institution, email, assets })
+    });
+    if (!res.ok) throw new Error();
+    document.getElementById('modalForm').style.display = 'none';
+    document.getElementById('modalSuccess').style.display = 'block';
+  } catch {
+    errEl.textContent = 'Something went wrong. Email us at hello@bridgepointpay.com';
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Submit request';
+  }
+}
+</script>
 
 </body>
 </html>
