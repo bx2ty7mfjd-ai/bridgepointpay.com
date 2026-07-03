@@ -3,634 +3,184 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MES Command Center</title>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+<title>BridgePoint Pay — Modern Payment Infrastructure for Banks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#080c10;--bg2:#0d1318;--bg3:#111820;
-  --border:#1a2a35;--border2:#1e3040;
-  --green:#00ff88;--green2:#00cc6a;
-  --red:#ff3355;--red2:#cc2244;
-  --gold:#ffc840;--blue:#00aaff;--cyan:#00e5ff;
-  --dim:#3a5060;--text:#c8dde8;--text2:#6a8a9a;--text3:#3a5060;
-  --asia:#ff9500;--london:#00aaff;--ny:#00ff88;
-  --font-mono:'Share Tech Mono',monospace;
-  --font-head:'Orbitron',monospace;
-  --font-body:'Exo 2',sans-serif;
-}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-height:100vh;overflow-x:hidden;}
-body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:1000;}
-body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,170,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,170,255,0.025) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
-.wrap{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:0 20px 60px;}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+body{background:#ffffff;color:#0a0a0a;font-family:'Inter',system-ui,sans-serif;line-height:1.6;}
+a{text-decoration:none;}
 
-/* HEADER */
-.hdr{display:flex;align-items:center;justify-content:space-between;padding:20px 0 16px;border-bottom:1px solid var(--border2);margin-bottom:20px;}
-.hdr-logo{font-family:var(--font-head);font-size:22px;font-weight:900;letter-spacing:4px;color:var(--cyan);text-shadow:0 0 20px rgba(0,229,255,0.4);}
-.hdr-logo span{color:var(--green);}
-.hdr-sub{font-family:var(--font-mono);font-size:10px;color:var(--text2);letter-spacing:2px;margin-top:3px;}
-.live-dot{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;color:var(--green);letter-spacing:2px;}
-.live-dot::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 1.5s infinite;}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-bottom:1px solid #e8e8e4;display:flex;align-items:center;justify-content:space-between;padding:0 64px;height:68px;}
+.logo{display:flex;align-items:center;gap:12px;}
+.logo svg{width:52px;height:34px;}
+.logotype{font-size:16px;font-weight:700;color:#0a0a0a;letter-spacing:-0.3px;}
+.logotype span{color:#2346f5;}
+.nav-r{display:flex;align-items:center;gap:28px;}
+.nav-r a{font-size:13px;color:#888;font-weight:500;transition:color 0.15s;}
+.nav-r a:hover{color:#0a0a0a;}
+.nav-btn{background:#0a0a0a;color:#fff;padding:8px 18px;border-radius:5px;font-size:13px;font-weight:600;transition:opacity 0.15s;}
+.nav-btn:hover{opacity:0.75;}
 
-/* PRICE TICKER */
-.price-bar{background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:12px 20px;margin-bottom:16px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
-.price-main{font-family:var(--font-mono);font-size:28px;color:var(--cyan);letter-spacing:2px;}
-.price-change{font-family:var(--font-mono);font-size:14px;}
-.price-change.pos{color:var(--green);}
-.price-change.neg{color:var(--red);}
-.price-meta{font-family:var(--font-mono);font-size:11px;color:var(--text2);display:flex;gap:16px;flex-wrap:wrap;}
-.price-meta span{display:flex;gap:5px;}
-.price-meta .lbl{color:var(--text3);}
-.price-label{font-family:var(--font-head);font-size:10px;letter-spacing:3px;color:var(--text2);margin-right:8px;}
-.last-update{font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-left:auto;}
+.hero{max-width:1100px;margin:0 auto;padding:96px 64px 80px;}
+.hero h1{font-size:52px;font-weight:700;line-height:1.06;letter-spacing:-2px;color:#0a0a0a;max-width:560px;margin-bottom:20px;}
+.hero p{font-size:17px;color:#888;line-height:1.7;max-width:420px;margin-bottom:36px;font-weight:400;}
+.hero-btn{display:inline-block;background:#0a0a0a;color:#fff;padding:13px 26px;border-radius:5px;font-size:14px;font-weight:600;transition:opacity 0.15s;}
+.hero-btn:hover{opacity:0.75;}
 
-/* BLACKOUT */
-.blackout{display:none;background:linear-gradient(90deg,rgba(255,51,85,0.15),rgba(255,51,85,0.08),rgba(255,51,85,0.15));border:1px solid var(--red);border-radius:6px;padding:13px 20px;margin-bottom:16px;font-family:var(--font-mono);font-size:13px;color:var(--red);letter-spacing:1px;text-align:center;animation:blink 2s infinite;}
-.blackout.show{display:block;}
-@keyframes blink{0%,100%{border-color:var(--red)}50%{border-color:transparent}}
+.divider{height:1px;background:#e8e8e4;margin:0 64px;}
 
-/* CLOCKS */
-.clocks{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px;}
-.clock{background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:20px;position:relative;overflow:hidden;transition:border-color 0.3s,background 0.3s;}
-.clock::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0.8;}
-.clock.asia::before{background:var(--asia);box-shadow:0 0 12px var(--asia);}
-.clock.london::before{background:var(--london);box-shadow:0 0 12px var(--london);}
-.clock.ny::before{background:var(--ny);box-shadow:0 0 12px var(--ny);}
-.clock.is-open.asia{border-color:rgba(255,149,0,0.35);background:linear-gradient(135deg,#150f00,#1c1400);}
-.clock.is-open.london{border-color:rgba(0,170,255,0.35);background:linear-gradient(135deg,#001520,#001c2a);}
-.clock.is-open.ny{border-color:rgba(0,255,136,0.35);background:linear-gradient(135deg,#001510,#001e16);}
-.clock-name{font-family:var(--font-head);font-size:10px;font-weight:700;letter-spacing:3px;margin-bottom:10px;}
-.asia .clock-name{color:var(--asia);}
-.london .clock-name{color:var(--london);}
-.ny .clock-name{color:var(--ny);}
-.clock-time{font-family:var(--font-mono);font-size:34px;line-height:1;margin-bottom:5px;letter-spacing:2px;}
-.asia .clock-time{color:var(--asia);text-shadow:0 0 16px rgba(255,149,0,0.3);}
-.london .clock-time{color:var(--london);text-shadow:0 0 16px rgba(0,170,255,0.3);}
-.ny .clock-time{color:var(--ny);text-shadow:0 0 16px rgba(0,255,136,0.3);}
-.clock-date{font-family:var(--font-mono);font-size:10px;color:var(--text2);letter-spacing:1px;margin-bottom:12px;}
-.clock-status{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;padding:3px 9px;border-radius:3px;margin-bottom:8px;}
-.st-open{background:rgba(0,255,136,0.1);color:var(--green);border:1px solid rgba(0,255,136,0.3);}
-.st-open::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 1s infinite;}
-.st-closed{background:rgba(255,255,255,0.03);color:var(--dim);border:1px solid var(--border);}
-.st-closed::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--dim);}
-.clock-orb{font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:1px;margin-top:4px;}
-.clock-cd{font-family:var(--font-mono);font-size:12px;letter-spacing:1px;margin-top:6px;}
-.asia .clock-cd{color:var(--asia);}
-.london .clock-cd{color:var(--london);}
-.ny .clock-cd{color:var(--ny);}
-.orb-active{font-family:var(--font-mono);font-size:11px;color:var(--gold);letter-spacing:2px;margin-top:6px;animation:pulse 1s infinite;}
+.sec{max-width:1100px;margin:0 auto;padding:72px 64px;}
+.sec-label{font-size:11px;font-weight:600;letter-spacing:2.5px;color:#aaa;text-transform:uppercase;margin-bottom:36px;}
 
-/* SESSION STATUS BAR */
-.ssbar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
-.ssb{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:9px 14px;display:flex;align-items:center;justify-content:space-between;font-family:var(--font-mono);font-size:11px;}
-.ssb.on{border-color:rgba(0,255,136,0.3);background:rgba(0,255,136,0.04);}
-.ssb-n{letter-spacing:2px;}
-.ssb.on .ssb-n{color:var(--green);}
-.ssb:not(.on) .ssb-n{color:var(--dim);}
-.ssb-s{font-size:10px;color:var(--text3);}
-.ssb.on .ssb-s{color:var(--text2);}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#e8e8e4;border:1px solid #e8e8e4;border-radius:10px;overflow:hidden;}
+.how-card{background:#f9f9f7;padding:32px 28px;}
+.how-n{font-size:11px;color:#ccc;margin-bottom:14px;font-family:monospace;letter-spacing:1px;}
+.how-card h3{font-size:15px;font-weight:700;color:#0a0a0a;margin-bottom:10px;letter-spacing:-0.2px;}
+.how-card p{font-size:13px;color:#888;line-height:1.7;}
 
-/* MAIN GRID */
-.grid{display:grid;grid-template-columns:1fr 320px;gap:16px;}
+.rails-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.rail{border:1px solid #e8e8e4;border-radius:10px;padding:28px 26px;}
+.rail h3{font-size:15px;font-weight:700;color:#0a0a0a;margin-bottom:10px;letter-spacing:-0.2px;}
+.rail p{font-size:13px;color:#888;line-height:1.7;}
 
-/* PANEL */
-.panel{background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:18px;margin-bottom:14px;}
-.sec{font-family:var(--font-head);font-size:10px;font-weight:700;letter-spacing:3px;color:var(--text2);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-.sec::after{content:'';flex:1;height:1px;background:var(--border2);}
-.sec-badge{font-size:9px;padding:2px 6px;border-radius:3px;background:rgba(0,229,255,0.1);color:var(--cyan);border:1px solid rgba(0,229,255,0.2);}
+.built-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#e8e8e4;border:1px solid #e8e8e4;border-radius:10px;overflow:hidden;}
+.built-card{background:#f9f9f7;padding:28px 26px;}
+.built-card h3{font-size:15px;font-weight:700;color:#0a0a0a;margin-bottom:8px;letter-spacing:-0.2px;}
+.built-card p{font-size:13px;color:#888;line-height:1.7;}
 
-/* CALENDAR EVENTS */
-.ev{display:flex;align-items:flex-start;gap:10px;padding:11px 0;border-bottom:1px solid var(--border);font-size:13px;}
-.ev:last-child{border-bottom:none;}
-.ev.past{opacity:0.35;}
-.ev-time{font-family:var(--font-mono);font-size:11px;color:var(--text2);min-width:58px;padding-top:2px;}
-.ev-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
-.dot-high{background:var(--red);box-shadow:0 0 5px var(--red);}
-.dot-med{background:var(--gold);box-shadow:0 0 5px var(--gold);}
-.dot-low{background:var(--green2);}
-.ev-body{flex:1;}
-.ev-name{font-weight:600;margin-bottom:2px;}
-.ev-detail{font-family:var(--font-mono);font-size:11px;color:var(--text2);}
-.ev-cd{font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-top:2px;}
-.ev-badge{font-family:var(--font-mono);font-size:10px;padding:2px 7px;border-radius:3px;flex-shrink:0;}
-.eb-high{background:rgba(255,51,85,0.15);color:var(--red);border:1px solid rgba(255,51,85,0.3);}
-.eb-med{background:rgba(255,200,64,0.12);color:var(--gold);border:1px solid rgba(255,200,64,0.3);}
-.eb-low{background:rgba(0,204,106,0.1);color:var(--green2);border:1px solid rgba(0,204,106,0.2);}
-.no-events{font-family:var(--font-mono);font-size:12px;color:var(--text3);text-align:center;padding:20px;}
+.cta-sec{text-align:center;padding:96px 64px;border-top:1px solid #e8e8e4;}
+.cta-sec h2{font-size:38px;font-weight:700;letter-spacing:-1.2px;margin-bottom:14px;}
+.cta-sec p{font-size:15px;color:#888;margin-bottom:32px;}
+.cta-btn{display:inline-block;background:#0a0a0a;color:#fff;padding:13px 26px;border-radius:5px;font-size:14px;font-weight:600;transition:opacity 0.15s;}
+.cta-btn:hover{opacity:0.75;}
 
-/* NEWS */
-.filters{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap;}
-.fb{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;padding:5px 11px;border-radius:3px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;transition:all 0.2s;}
-.fb:hover,.fb.on{background:rgba(0,229,255,0.07);border-color:var(--cyan);color:var(--cyan);}
-.fb.fh.on{background:rgba(255,51,85,0.1);border-color:var(--red);color:var(--red);}
-.fb.fm.on{background:rgba(255,200,64,0.1);border-color:var(--gold);color:var(--gold);}
-.fb.fl.on{background:rgba(0,204,106,0.08);border-color:var(--green2);color:var(--green2);}
-.news-item{padding:12px 0;border-bottom:1px solid var(--border);cursor:pointer;}
-.news-item:last-child{border-bottom:none;}
-.news-meta{display:flex;align-items:center;gap:7px;margin-bottom:5px;}
-.news-src{font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:1px;}
-.news-age{font-family:var(--font-mono);font-size:10px;color:var(--text3);}
-.news-hl{font-size:13px;font-weight:600;color:var(--text);line-height:1.4;margin-bottom:4px;}
-.news-sum{font-size:12px;color:var(--text2);line-height:1.5;}
-.bias-badge{font-family:var(--font-mono);font-size:10px;padding:2px 7px;border-radius:3px;letter-spacing:1px;margin-left:auto;}
-.bias-bull{background:rgba(0,204,106,0.12);color:var(--green2);border:1px solid rgba(0,204,106,0.25);}
-.bias-bear{background:rgba(255,51,85,0.12);color:var(--red);border:1px solid rgba(255,51,85,0.25);}
-.bias-neut{background:rgba(255,200,64,0.1);color:var(--gold);border:1px solid rgba(255,200,64,0.2);}
+footer{border-top:1px solid #e8e8e4;padding:26px 64px;display:flex;align-items:center;justify-content:space-between;}
+.ft-logo{font-size:14px;font-weight:700;color:#0a0a0a;}
+.ft-logo span{color:#2346f5;}
+.ft-copy{font-size:12px;color:#ccc;}
 
-.loading{font-family:var(--font-mono);font-size:12px;color:var(--text3);text-align:center;padding:30px;letter-spacing:2px;}
-
-/* GAP */
-.gap-big{text-align:center;padding:14px 0;}
-.gap-val{font-family:var(--font-mono);font-size:38px;line-height:1;margin-bottom:3px;}
-.gap-val.pos{color:var(--green);text-shadow:0 0 16px rgba(0,255,136,0.3);}
-.gap-val.neg{color:var(--red);text-shadow:0 0 16px rgba(255,51,85,0.3);}
-.gap-lbl{font-family:var(--font-mono);font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:12px;}
-.gap-row{display:flex;justify-content:space-between;padding:5px 0;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:11px;}
-.gap-row .gl{color:var(--text2);}
-.gap-row .gv{color:var(--text);}
-.gap-flag{margin-top:10px;padding:7px 12px;border-radius:4px;font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-align:center;}
-.gf-large{background:rgba(255,51,85,0.1);color:var(--red);border:1px solid rgba(255,51,85,0.3);}
-.gf-normal{background:rgba(0,204,106,0.07);color:var(--green2);border:1px solid rgba(0,204,106,0.2);}
-
-/* SENTIMENT */
-.sent-read{text-align:center;font-family:var(--font-mono);font-size:22px;letter-spacing:2px;margin-bottom:3px;}
-.sent-read.bull{color:var(--green);}
-.sent-read.bear{color:var(--red);}
-.sent-read.neut{color:var(--gold);}
-.sent-sub{text-align:center;font-family:var(--font-mono);font-size:11px;color:var(--text2);margin-bottom:12px;}
-.sent-gauge{position:relative;height:8px;background:linear-gradient(90deg,var(--red2),#333,var(--green2));border-radius:4px;margin-bottom:6px;}
-.sent-needle{position:absolute;top:-6px;width:20px;height:20px;background:white;border-radius:50%;border:2px solid var(--bg);box-shadow:0 0 8px rgba(255,255,255,0.4);transform:translateX(-50%);transition:left 1s ease;}
-.sent-labels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-bottom:12px;}
-.kw{font-family:var(--font-mono);font-size:10px;padding:2px 7px;border-radius:3px;display:inline-block;margin:3px 3px 0 0;}
-.kw.bull{background:rgba(0,204,106,0.1);color:var(--green2);border:1px solid rgba(0,204,106,0.2);}
-.kw.bear{background:rgba(255,51,85,0.1);color:var(--red);border:1px solid rgba(255,51,85,0.2);}
-.kw.neut{background:rgba(255,255,255,0.04);color:var(--text3);border:1px solid var(--border);}
-.hint{font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-top:10px;line-height:1.6;}
-
-/* CALC */
-.cr{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
-.cr label{font-family:var(--font-mono);font-size:10px;color:var(--text2);min-width:90px;letter-spacing:1px;}
-.cr input[type=range]{flex:1;accent-color:var(--cyan);}
-.cr span{font-family:var(--font-mono);font-size:12px;color:var(--cyan);min-width:38px;text-align:right;}
-.cr-res{background:var(--bg3);border:1px solid var(--border2);border-radius:5px;padding:10px;margin-top:10px;}
-.cr-row{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;padding:3px 0;border-bottom:1px solid var(--border);}
-.cr-row:last-child{border-bottom:none;}
-.cr-row .cl{color:var(--text2);}
-.cr-row .cv{color:var(--cyan);}
-.cr-row .cv.ok{color:var(--green);}
-.cr-row .cv.warn{color:var(--red);}
-
-::-webkit-scrollbar{width:4px;}
-::-webkit-scrollbar-track{background:var(--bg);}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
-@media(max-width:900px){.grid{grid-template-columns:1fr;}.clocks{grid-template-columns:1fr;}.ssbar{grid-template-columns:1fr;}}
+@media(max-width:768px){
+  nav{padding:0 20px;height:60px;}
+  .nav-r a:not(.nav-btn){display:none;}
+  .hero{padding:56px 20px 48px;}
+  .hero h1{font-size:34px;letter-spacing:-1px;}
+  .hero p{font-size:15px;}
+  .divider{margin:0 20px;}
+  .sec{padding:52px 20px;}
+  .how-grid{grid-template-columns:1fr;}
+  .rails-grid{grid-template-columns:1fr;}
+  .built-grid{grid-template-columns:1fr;}
+  .cta-sec{padding:64px 20px;}
+  .cta-sec h2{font-size:28px;}
+  footer{padding:20px;flex-direction:column;gap:8px;text-align:center;}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <div class="hdr">
-    <div>
-      <div class="hdr-logo">MES<span>1!</span> COMMAND</div>
-      <div class="hdr-sub">MICRO E-MINI S&P 500 · LIVE INTELLIGENCE FEED</div>
-    </div>
-    <div class="live-dot">LIVE</div>
+<nav>
+  <a href="/" class="logo">
+    <svg viewBox="0 0 88 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8,44 Q44,8 80,44" stroke="#2346f5" stroke-width="2.5" fill="none"/>
+      <line x1="4" y1="44" x2="84" y2="44" stroke="#0a0a0a" stroke-width="2.5"/>
+      <line x1="24" y1="30" x2="24" y2="44" stroke="#0a0a0a" stroke-width="1.5"/>
+      <line x1="38" y1="20" x2="38" y2="44" stroke="#0a0a0a" stroke-width="1.5"/>
+      <line x1="44" y1="17" x2="44" y2="44" stroke="#0a0a0a" stroke-width="1.5"/>
+      <line x1="50" y1="20" x2="50" y2="44" stroke="#0a0a0a" stroke-width="1.5"/>
+      <line x1="64" y1="30" x2="64" y2="44" stroke="#0a0a0a" stroke-width="1.5"/>
+    </svg>
+    <div class="logotype">Bridge<span>Point</span></div>
+  </a>
+  <div class="nav-r">
+    <a href="#how">How it works</a>
+    <a href="#rails">Rails</a>
+    <a href="#serve">Who we serve</a>
+    <a href="mailto:hello@bridgepointpay.com" class="nav-btn">Request access</a>
   </div>
+</nav>
 
-  <!-- LIVE PRICE BAR -->
-  <div class="price-bar">
-    <span class="price-label">MES1!</span>
-    <span class="price-main" id="px-price">—</span>
-    <span class="price-change" id="px-change">—</span>
-    <div class="price-meta">
-      <span><span class="lbl">HIGH</span><span id="px-high">—</span></span>
-      <span><span class="lbl">LOW</span><span id="px-low">—</span></span>
-      <span><span class="lbl">PREV</span><span id="px-prev">—</span></span>
+<div class="hero">
+  <h1>Modern payment infrastructure for banks.</h1>
+  <p>One API connects your institution to FedNow and RTP. Transactions settle in seconds. No core replacement required.</p>
+  <a href="mailto:hello@bridgepointpay.com" class="hero-btn">Request access</a>
+</div>
+
+<div class="divider"></div>
+
+<div class="sec" id="how">
+  <div class="sec-label">How it works</div>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-n">01</div>
+      <h3>Integrate once</h3>
+      <p>A single REST API gives you access to both FedNow and RTP. Your team can be live in days, not quarters.</p>
     </div>
-    <span class="last-update" id="px-updated">updating...</span>
-  </div>
-
-  <!-- BLACKOUT BANNER -->
-  <div class="blackout" id="blackout">⚠ BLACKOUT ZONE ACTIVE — HIGH IMPACT EVENT — AVOID NEW ENTRIES</div>
-
-  <!-- SESSION CLOCKS -->
-  <div class="clocks">
-    <div class="clock asia" id="clk-asia">
-      <div class="clock-name">ASIA SESSION · TOKYO</div>
-      <div class="clock-time" id="ct-asia">--:--:--</div>
-      <div class="clock-date" id="cd-asia">---</div>
-      <div class="clock-status st-closed" id="cs-asia">CLOSED</div>
-      <div class="clock-orb">15MIN ORB · 20:00–20:15 ET</div>
-      <div class="clock-cd" id="cc-asia"></div>
-      <div class="orb-active" id="orb-asia" style="display:none">◆ ORB WINDOW ACTIVE</div>
+    <div class="how-card">
+      <div class="how-n">02</div>
+      <h3>Automatic routing</h3>
+      <p>BridgePoint selects the best rail for each transaction automatically. No manual configuration required.</p>
     </div>
-    <div class="clock london" id="clk-london">
-      <div class="clock-name">LONDON SESSION · LSE</div>
-      <div class="clock-time" id="ct-london">--:--:--</div>
-      <div class="clock-date" id="cd-london">---</div>
-      <div class="clock-status st-closed" id="cs-london">CLOSED</div>
-      <div class="clock-orb">15MIN ORB · 03:00–03:15 ET</div>
-      <div class="clock-cd" id="cc-london"></div>
-      <div class="orb-active" id="orb-london" style="display:none">◆ ORB WINDOW ACTIVE</div>
-    </div>
-    <div class="clock ny" id="clk-ny">
-      <div class="clock-name">NEW YORK SESSION · CME</div>
-      <div class="clock-time" id="ct-ny">--:--:--</div>
-      <div class="clock-date" id="cd-ny">---</div>
-      <div class="clock-status st-closed" id="cs-ny">CLOSED</div>
-      <div class="clock-orb">15MIN ORB · 09:30–09:45 ET</div>
-      <div class="clock-cd" id="cc-ny"></div>
-      <div class="orb-active" id="orb-ny" style="display:none">◆ ORB WINDOW ACTIVE</div>
-    </div>
-  </div>
-
-  <!-- SESSION STATUS BAR -->
-  <div class="ssbar">
-    <div class="ssb" id="ssb-asia"><span class="ssb-n">ASIA</span><span class="ssb-s" id="ssbs-asia">CLOSED</span></div>
-    <div class="ssb" id="ssb-london"><span class="ssb-n">LONDON</span><span class="ssb-s" id="ssbs-london">CLOSED</span></div>
-    <div class="ssb" id="ssb-ny"><span class="ssb-n">NEW YORK</span><span class="ssb-s" id="ssbs-ny">CLOSED</span></div>
-  </div>
-
-  <!-- MAIN GRID -->
-  <div class="grid">
-    <div>
-
-      <!-- TODAY'S KEY EVENTS -->
-      <div class="panel">
-        <div class="sec">TODAY'S KEY EVENTS <span class="sec-badge" id="cal-badge">LOADING</span></div>
-        <div id="events-list"><div class="loading">FETCHING CALENDAR...</div></div>
-      </div>
-
-      <!-- NEWS FEED -->
-      <div class="panel">
-        <div class="sec">LIVE MARKET FEED <span class="sec-badge" id="news-badge">LOADING</span></div>
-        <div class="filters">
-          <button class="fb on" onclick="filterNews('all',this)">ALL</button>
-          <button class="fb fh" onclick="filterNews('high',this)">HIGH IMPACT</button>
-          <button class="fb fm" onclick="filterNews('med',this)">MEDIUM</button>
-          <button class="fb fl" onclick="filterNews('low',this)">LOW</button>
-        </div>
-        <div id="news-feed"><div class="loading">FETCHING NEWS...</div></div>
-      </div>
-
-    </div>
-
-    <!-- RIGHT COLUMN -->
-    <div>
-
-      <!-- OVERNIGHT GAP -->
-      <div class="panel">
-        <div class="sec">OVERNIGHT GAP</div>
-        <div class="gap-big">
-          <div class="gap-val pos" id="g-val">—</div>
-          <div class="gap-lbl">POINTS FROM PREV CLOSE</div>
-        </div>
-        <div class="gap-row"><span class="gl">PREV CLOSE</span><span class="gv" id="g-prev">—</span></div>
-        <div class="gap-row"><span class="gl">TODAY OPEN</span><span class="gv" id="g-open">—</span></div>
-        <div class="gap-row"><span class="gl">CURRENT</span><span class="gv" id="g-cur">—</span></div>
-        <div class="gap-row"><span class="gl">GAP %</span><span class="gv" id="g-pct">—</span></div>
-        <div class="gap-flag gf-normal" id="g-flag">GAP WITHIN NORMAL RANGE</div>
-        <div class="hint">GAPS &gt;10pts OFTEN FILL BEFORE TRENDING. ADJUST ORB BIAS.</div>
-      </div>
-
-      <!-- SENTIMENT -->
-      <div class="panel">
-        <div class="sec">SENTIMENT STRIP</div>
-        <div class="sent-read bull" id="sent-r">—</div>
-        <div class="sent-sub" id="sent-s">ANALYZING HEADLINES...</div>
-        <div class="sent-gauge"><div class="sent-needle" id="sent-n" style="left:50%"></div></div>
-        <div class="sent-labels"><span>BEARISH</span><span>NEUTRAL</span><span>BULLISH</span></div>
-        <div id="sent-kw"></div>
-        <div class="hint">DERIVED FROM LIVE HEADLINE KEYWORDS. NOT A TRADE SIGNAL.</div>
-      </div>
-
-      <!-- RISK CALC -->
-      <div class="panel">
-        <div class="sec">RISK CALCULATOR</div>
-        <div class="cr"><label>STOP TICKS</label><input type="range" min="4" max="32" value="8" step="4" id="r-sl" oninput="calcUpdate()"><span id="r-sl-o">8</span></div>
-        <div class="cr"><label>CONTRACTS</label><input type="range" min="1" max="20" value="5" step="1" id="r-ct" oninput="calcUpdate()"><span id="r-ct-o">5</span></div>
-        <div class="cr"><label>TARGET R</label><input type="range" min="1" max="4" value="2" step="0.5" id="r-rr" oninput="calcUpdate()"><span id="r-rr-o">2R</span></div>
-        <div class="cr-res">
-          <div class="cr-row"><span class="cl">RISK $</span><span class="cv" id="r-risk">—</span></div>
-          <div class="cr-row"><span class="cl">TARGET $</span><span class="cv ok" id="r-tp">—</span></div>
-          <div class="cr-row"><span class="cl">TP TICKS</span><span class="cv" id="r-tpt">—</span></div>
-          <div class="cr-row"><span class="cl">% OF LIMIT</span><span class="cv" id="r-pct">—</span></div>
-          <div class="cr-row"><span class="cl">MAX LOSSES</span><span class="cv" id="r-max">—</span></div>
-        </div>
-      </div>
-
+    <div class="how-card">
+      <div class="how-n">03</div>
+      <h3>Instant settlement</h3>
+      <p>Funds move in seconds, 24/7/365. Webhooks keep your systems in sync in real time.</p>
     </div>
   </div>
 </div>
 
-<script>
-// ─── UTILS ────────────────────────────────────────────────────
-const pad = n => String(n).padStart(2,'0');
+<div class="divider"></div>
 
-function toET(){ return new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'})); }
-function toTZ(tz){ return new Date(new Date().toLocaleString('en-US',{timeZone:tz})); }
+<div class="sec" id="rails">
+  <div class="sec-label">Payment rails</div>
+  <div class="rails-grid">
+    <div class="rail">
+      <h3>FedNow Service</h3>
+      <p>The Federal Reserve's instant payment rail. 24/7/365 availability with broad participation across U.S. financial institutions and direct Federal Reserve settlement.</p>
+    </div>
+    <div class="rail">
+      <h3>RTP® Network</h3>
+      <p>The Clearing House's real-time payment network. High transaction limits and deep institutional participation, with immediate funds availability for recipients.</p>
+    </div>
+  </div>
+</div>
 
-function fmtTime(d){ return pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds()); }
-function fmtDate(d){
-  const D=['SUN','MON','TUE','WED','THU','FRI','SAT'];
-  const M=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-  return D[d.getDay()]+' '+d.getDate()+' '+M[d.getMonth()];
-}
+<div class="divider"></div>
 
-function secsUntil(h,m){
-  const now=toET();
-  const t=new Date(now); t.setHours(h,m,0,0);
-  let d=(t-now)/1000; if(d<0) d+=86400; return d;
-}
+<div class="sec" id="serve">
+  <div class="sec-label">Who we serve</div>
+  <div class="built-grid">
+    <div class="built-card">
+      <h3>No core replacement</h3>
+      <p>BridgePoint sits alongside your existing system. No rip-and-replace, no multi-year implementation project.</p>
+    </div>
+    <div class="built-card">
+      <h3>Compliance ready</h3>
+      <p>Bank-grade security, full audit logging, and idempotency controls built in from day one.</p>
+    </div>
+    <div class="built-card">
+      <h3>Compete on speed</h3>
+      <p>Offer your customers the instant payment experience they already expect from modern financial apps.</p>
+    </div>
+    <div class="built-card">
+      <h3>Simple pricing</h3>
+      <p>Usage-based with no monthly minimums and no setup fees. Reach out to discuss your volume.</p>
+    </div>
+  </div>
+</div>
 
-function fmtCD(s){
-  const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sc=Math.floor(s%60);
-  return (h>0?pad(h)+'H ':'')+pad(m)+'M '+pad(sc)+'S';
-}
+<div class="cta-sec">
+  <h2>Ready to move money faster?</h2>
+  <p>We're working with a select group of institutions. Reach out to start the conversation.</p>
+  <a href="mailto:hello@bridgepointpay.com" class="cta-btn">Request access →</a>
+</div>
 
-function isOpen(oh,om,ch,cm){
-  const now=toET(); const h=now.getHours(),m=now.getMinutes();
-  const n=h*60+m, o=oh*60+om, c=ch*60+cm;
-  if(oh===20) return n>=o||n<c;
-  return n>=o&&n<c;
-}
+<footer>
+  <div class="ft-logo">Bridge<span>Point</span> Pay</div>
+  <div class="ft-copy">© 2026 BridgePoint Pay. All rights reserved.</div>
+</footer>
 
-function isOrb(oh,om){
-  const now=toET(); const n=now.getHours()*60+now.getMinutes();
-  const o=oh*60+om; return n>=o&&n<o+15;
-}
-
-// ─── CLOCKS ───────────────────────────────────────────────────
-const SESS=[
-  {id:'asia',  tz:'Asia/Tokyo',       oh:20,om:0, ch:0, cm:0},
-  {id:'london',tz:'Europe/London',    oh:3, om:0, ch:12,cm:0},
-  {id:'ny',    tz:'America/New_York', oh:9, om:30,ch:16,cm:0}
-];
-
-function tickClocks(){
-  SESS.forEach(s=>{
-    const loc=toTZ(s.tz);
-    document.getElementById('ct-'+s.id).textContent=fmtTime(loc);
-    document.getElementById('cd-'+s.id).textContent=fmtDate(loc);
-    const open=isOpen(s.oh,s.om,s.ch,s.cm);
-    const orb=isOrb(s.oh,s.om);
-    const csEl=document.getElementById('cs-'+s.id);
-    const clkEl=document.getElementById('clk-'+s.id);
-    const ccEl=document.getElementById('cc-'+s.id);
-    const orbEl=document.getElementById('orb-'+s.id);
-    const ssbEl=document.getElementById('ssb-'+s.id);
-    const ssbsEl=document.getElementById('ssbs-'+s.id);
-    if(open){
-      csEl.className='clock-status st-open'; csEl.textContent='OPEN';
-      clkEl.classList.add('is-open');
-      ssbEl.classList.add('on');
-      const now=toET(); const el=(now.getHours()*60+now.getMinutes())-(s.oh*60+s.om);
-      ssbsEl.textContent='OPEN '+(el<0?el+1440:el)+'M';
-      if(!orb) ccEl.textContent='';
-    } else {
-      csEl.className='clock-status st-closed'; csEl.textContent='CLOSED';
-      clkEl.classList.remove('is-open');
-      ssbEl.classList.remove('on');
-      ssbsEl.textContent='CLOSED';
-      ccEl.textContent='OPENS IN '+fmtCD(secsUntil(s.oh,s.om));
-    }
-    orbEl.style.display=orb?'block':'none';
-    if(orb) ccEl.textContent='';
-  });
-}
-
-// ─── BLACKOUT CHECK ───────────────────────────────────────────
-let calendarData=[];
-
-function checkBlackout(){
-  const now=toET();
-  const nowMins=now.getHours()*60+now.getMinutes();
-  const banner=document.getElementById('blackout');
-  let active=null;
-  calendarData.forEach(ev=>{
-    if(ev.impact!=='high') return;
-    const parts=ev.time.match(/(\d+):(\d+)(am|pm)?/i);
-    if(!parts) return;
-    let h=parseInt(parts[1]),m=parseInt(parts[2]);
-    const ampm=parts[3]?.toLowerCase();
-    if(ampm==='pm'&&h!==12) h+=12;
-    if(ampm==='am'&&h===12) h=0;
-    const evMins=h*60+m;
-    const diff=evMins-nowMins;
-    if(diff>=-30&&diff<=30) active={...ev,diff};
-  });
-  if(active){
-    banner.classList.add('show');
-    const pre=active.diff>0;
-    banner.textContent=pre
-      ?`⚠ BLACKOUT — ${active.event} IN ${active.diff}M AT ${active.time} — AVOID NEW ENTRIES`
-      :`⚠ BLACKOUT — ${active.event} RELEASED — VOLATILITY WINDOW ACTIVE — ${30+active.diff}M REMAINING`;
-  } else {
-    banner.classList.remove('show');
-  }
-}
-
-// ─── FETCH CALENDAR ──────────────────────────────────────────
-async function loadCalendar(){
-  try{
-    const res=await fetch('/api/calendar');
-    const json=await res.json();
-    calendarData=json.data||[];
-    document.getElementById('cal-badge').textContent=calendarData.length+' USD EVENTS';
-    renderEvents();
-  } catch(e){
-    document.getElementById('events-list').innerHTML='<div class="no-events">CALENDAR UNAVAILABLE — SERVER MAY STILL BE LOADING</div>';
-  }
-}
-
-function renderEvents(){
-  const now=toET();
-  const nowMins=now.getHours()*60+now.getMinutes();
-  const el=document.getElementById('events-list');
-  if(!calendarData.length){
-    el.innerHTML='<div class="no-events">NO USD EVENTS TODAY</div>'; return;
-  }
-  el.innerHTML=calendarData.map(ev=>{
-    const parts=ev.time.match(/(\d+):(\d+)(am|pm)?/i);
-    let evMins=0;
-    if(parts){
-      let h=parseInt(parts[1]),m=parseInt(parts[2]);
-      const ap=parts[3]?.toLowerCase();
-      if(ap==='pm'&&h!==12)h+=12; if(ap==='am'&&h===12)h=0;
-      evMins=h*60+m;
-    }
-    const diff=evMins-nowMins;
-    const past=diff<-30;
-    const dotCls={'high':'dot-high','med':'dot-med','low':'dot-low'}[ev.impact]||'dot-low';
-    const badgeCls={'high':'eb-high','med':'eb-med','low':'eb-low'}[ev.impact]||'eb-low';
-    let cdStr='';
-    if(!past&&diff>0) cdStr=`<div class="ev-cd">IN ${diff<60?diff+'M':Math.floor(diff/60)+'H '+diff%60+'M'}</div>`;
-    else if(!past&&diff>=-30) cdStr=`<div class="ev-cd" style="color:var(--gold)">JUST RELEASED</div>`;
-    else cdStr=`<div class="ev-cd">PASSED</div>`;
-    const det=[];
-    if(ev.forecast) det.push('EST: '+ev.forecast);
-    if(ev.previous) det.push('PREV: '+ev.previous);
-    if(ev.actual)   det.push('ACT: '+ev.actual);
-    return `<div class="ev${past?' past':''}">
-      <span class="ev-time">${ev.time||'—'}</span>
-      <div class="ev-dot ${dotCls}"></div>
-      <div class="ev-body">
-        <div class="ev-name">${ev.event}</div>
-        <div class="ev-detail">${det.join(' · ')||'No forecast data'}</div>
-        ${cdStr}
-      </div>
-      <span class="ev-badge ${badgeCls}">${ev.impact.toUpperCase()}</span>
-    </div>`;
-  }).join('');
-}
-
-// ─── FETCH NEWS ───────────────────────────────────────────────
-let allNews=[];
-let newsFilter='all';
-
-async function loadNews(){
-  try{
-    const res=await fetch('/api/news');
-    const json=await res.json();
-    allNews=json.data||[];
-    document.getElementById('news-badge').textContent=allNews.length+' ARTICLES';
-    renderNews();
-    buildSentiment();
-  } catch(e){
-    document.getElementById('news-feed').innerHTML='<div class="loading">NEWS FEED UNAVAILABLE</div>';
-  }
-}
-
-function filterNews(f,btn){
-  newsFilter=f;
-  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  renderNews();
-}
-
-const BULL_BIAS=['rally','surge','gains','bullish','breakout','recovery','strong','beat','jump','rise','higher','up','positive','boost','advance','soar','record','outperform','exceed','better'];
-const BEAR_BIAS=['selloff','drop','decline','fall','bearish','weakness','miss','crash','slump','down','lower','negative','plunge','tumble','slide','sink','disappoint','fear','concern','warn','cut','loss'];
-function getArticleBias(title,summary){
-  const h=(title+' '+summary).toLowerCase();
-  let sc=0;
-  BULL_BIAS.forEach(k=>{if(h.includes(k))sc++;});
-  BEAR_BIAS.forEach(k=>{if(h.includes(k))sc--;});
-  return sc>0?'bull':sc<0?'bear':'neut';
-}
-function renderNews(){
-  const feed=document.getElementById('news-feed');
-  const filtered=newsFilter==='all'?allNews:allNews.filter(n=>n.impact===newsFilter);
-  if(!filtered.length){feed.innerHTML='<div class="loading">NO ARTICLES IN THIS CATEGORY</div>';return;}
-  const dotCls={'high':'dot-high','med':'dot-med','low':'dot-low'};
-  const bCls={'bull':'bias-bull','bear':'bias-bear','neut':'bias-neut'};
-  const bLbl={'bull':'BULLISH','bear':'BEARISH','neut':'NEUTRAL'};
-  feed.innerHTML=filtered.slice(0,20).map(n=>{
-    const bias=getArticleBias(n.title,n.summary);
-    return `<div class="news-item" onclick="window.open('${n.link}','_blank')">
-      <div class="news-meta">
-        <div class="ev-dot ${dotCls[n.impact]||'dot-low'}" style="margin-top:0"></div>
-        <span class="news-src">${n.source}</span>
-        <span class="news-age">${n.age}</span>
-        <span class="bias-badge ${bCls[bias]}">${bLbl[bias]}</span>
-      </div>
-      <div class="news-hl">${n.title}</div>
-      <div class="news-sum">${n.summary}</div>
-    </div>`;
-  }).join('');
-}
-
-// ─── SENTIMENT ────────────────────────────────────────────────
-const BULL_KW=['rally','surge','gains','bullish','breakout','recovery','strong','beat','jump','rise','up'];
-const BEAR_KW=['selloff','drop','decline','fall','bearish','weakness','miss','crash','slump','down','fear'];
-
-function buildSentiment(){
-  if(!allNews.length) return;
-  let score=50;
-  const foundBull=[], foundBear=[];
-  allNews.slice(0,15).forEach(n=>{
-    const h=(n.title+' '+n.summary).toLowerCase();
-    BULL_KW.forEach(k=>{ if(h.includes(k)&&!foundBull.includes(k)){score+=4;foundBull.push(k);} });
-    BEAR_KW.forEach(k=>{ if(h.includes(k)&&!foundBear.includes(k)){score-=4;foundBear.push(k);} });
-  });
-  score=Math.max(5,Math.min(95,score));
-  document.getElementById('sent-n').style.left=score+'%';
-  const rEl=document.getElementById('sent-r');
-  const sEl=document.getElementById('sent-s');
-  if(score>60){ rEl.className='sent-read bull'; rEl.textContent='BULLISH'; sEl.textContent=score+'% POSITIVE SIGNAL'; }
-  else if(score<40){ rEl.className='sent-read bear'; rEl.textContent='BEARISH'; sEl.textContent=(100-score)+'% NEGATIVE SIGNAL'; }
-  else{ rEl.className='sent-read neut'; rEl.textContent='NEUTRAL'; sEl.textContent='MIXED SIGNALS — PROCEED WITH CAUTION'; }
-  const kwDiv=document.getElementById('sent-kw');
-  const allKw=[...foundBull.slice(0,4).map(k=>({k,t:'bull'})),...foundBear.slice(0,3).map(k=>({k,t:'bear'}))];
-  kwDiv.innerHTML=allKw.map(({k,t})=>`<span class="kw ${t}">${k}</span>`).join('');
-}
-
-// ─── FETCH GAP ────────────────────────────────────────────────
-async function loadGap(){
-  try{
-    const res=await fetch('/api/gap');
-    const json=await res.json();
-    const d=json.data;
-    if(!d||!d.gap) return;
-    const gap=parseFloat(d.gap);
-    const gEl=document.getElementById('g-val');
-    gEl.textContent=(gap>=0?'+':'')+gap.toFixed(2);
-    gEl.className='gap-val '+(gap>=0?'pos':'neg');
-    document.getElementById('g-prev').textContent=d.prevClose;
-    document.getElementById('g-open').textContent=d.todayOpen;
-    document.getElementById('g-cur').textContent=d.current;
-    document.getElementById('g-pct').textContent=(gap>=0?'+':'')+d.gapPct+'%';
-    const fEl=document.getElementById('g-flag');
-    if(d.large){ fEl.className='gap-flag gf-large'; fEl.textContent='⚠ LARGE GAP — FILL LIKELY BEFORE TREND'; }
-    else{ fEl.className='gap-flag gf-normal'; fEl.textContent='GAP WITHIN NORMAL RANGE'; }
-    // Update price bar
-    document.getElementById('px-price').textContent=d.current;
-    document.getElementById('px-high').textContent=d.todayHigh;
-    document.getElementById('px-low').textContent=d.todayLow;
-    document.getElementById('px-prev').textContent=d.prevClose;
-    const chg=d.current&&d.prevClose?(parseFloat(d.current)-parseFloat(d.prevClose)):0;
-    const chgEl=document.getElementById('px-change');
-    chgEl.textContent=(chg>=0?'+':'')+chg.toFixed(2)+' ('+(chg>=0?'+':'')+(chg/parseFloat(d.prevClose)*100).toFixed(2)+'%)';
-    chgEl.className='price-change '+(chg>=0?'pos':'neg');
-    document.getElementById('px-updated').textContent='UPDATED '+new Date().toLocaleTimeString('en-US',{timeZone:'America/New_York',hour:'2-digit',minute:'2-digit'})+' ET';
-  } catch(e){ console.log('Gap fetch failed',e); }
-}
-
-// ─── RISK CALC ────────────────────────────────────────────────
-function calcUpdate(){
-  const sl=parseInt(document.getElementById('r-sl').value);
-  const ct=parseInt(document.getElementById('r-ct').value);
-  const rr=parseFloat(document.getElementById('r-rr').value);
-  document.getElementById('r-sl-o').textContent=sl;
-  document.getElementById('r-ct-o').textContent=ct;
-  document.getElementById('r-rr-o').textContent=rr+'R';
-  const risk=ct*sl*1.25;
-  const tp=ct*Math.round(sl*rr)*1.25;
-  const tpt=Math.round(sl*rr);
-  const pct=(risk/1000*100).toFixed(1);
-  const maxL=Math.floor(1000/risk);
-  document.getElementById('r-risk').textContent='$'+risk.toFixed(2);
-  document.getElementById('r-tp').textContent='$'+tp.toFixed(2);
-  document.getElementById('r-tpt').textContent=tpt+' ticks';
-  const pEl=document.getElementById('r-pct');
-  pEl.textContent=pct+'%';
-  pEl.className='cv '+(parseFloat(pct)>20?'warn':'ok');
-  document.getElementById('r-max').textContent=maxL+' trades';
-}
-
-// ─── INIT ─────────────────────────────────────────────────────
-tickClocks();
-calcUpdate();
-loadCalendar();
-loadNews();
-loadGap();
-
-setInterval(tickClocks, 1000);
-setInterval(checkBlackout, 30000);
-setInterval(renderEvents, 60000);
-setInterval(loadNews, 5 * 60 * 1000);
-setInterval(loadCalendar, 15 * 60 * 1000);
-setInterval(loadGap, 5 * 60 * 1000);
-</script>
 </body>
 </html>
